@@ -6,23 +6,37 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends  \
-        software-properties-common \
-        xvfb \
-        ca-certificates \
-        curl \
-        file \
-        fonts-dejavu-core \
-        g++ \
-        git \
-        locales \
-        maven \
-        openssh-client \
-        patch \
-        uuid-runtime \
-        unzip \
-        jq \
-        python3 \
+    software-properties-common \
+    xvfb \
+    ca-certificates \
+    curl \
+    file \
+    fonts-dejavu-core \
+    g++ \
+    git \
+    locales \
+    maven \
+    openssh-client \
+    patch \
+    uuid-runtime \
+    unzip \
+    jq \
+    python3 \
     && rm -rf /var/lib/apt/lists/*
+
+# Installing Node.js LTS (v14.x)
+# https://github.com/nodesource/distributions/blob/master/README.md#debinstall
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+RUN apt-get install -y nodejs
+RUN node -v
+
+# Installing yarn
+RUN npm install -g yarn
+RUN yarn -v
+
+# Installing TypeScript
+RUN npm install -g typescript
+RUN tsc -v
 
 # Default to UTF-8 file.encoding
 ENV LANG=C.UTF-8 \
