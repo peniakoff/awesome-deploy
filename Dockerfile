@@ -16,6 +16,7 @@ RUN apt-get update \
         git \
         locales \
         maven \
+        java-common \
         openssh-client \
         patch \
         uuid-runtime \
@@ -23,6 +24,10 @@ RUN apt-get update \
         jq \
         python3 \
     && rm -rf /var/lib/apt/lists/*
+
+# Installing Amazon Corretto 8 JDK
+ RUN curl -L -o "amazon-corretto-8-x64-linux-jdk.deb" https://corretto.aws/downloads/latest/amazon-corretto-8-x64-linux-jdk.deb
+ RUN dpkg --install amazon-corretto-8-x64-linux-jdk.deb
 
 # Default to UTF-8 file.encoding
 ENV LANG=C.UTF-8 \
