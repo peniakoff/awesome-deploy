@@ -23,6 +23,7 @@ RUN apt-get update \
         unzip \
         jq \
         python3 \
+        make \
     && rm -rf /var/lib/apt/lists/*
 
 # Installing Amazon Corretto 8 JDK
@@ -61,3 +62,4 @@ ENTRYPOINT /bin/bash
 
 RUN java -version
 RUN mvn --version
+RUN make --version
