@@ -22,6 +22,7 @@ RUN apt-get update \
         unzip \
         jq \
         python3 \
+        make \
     && rm -rf /var/lib/apt/lists/*
 
 # Default to UTF-8 file.encoding
@@ -56,3 +57,4 @@ ENTRYPOINT /bin/bash
 
 RUN java -version
 RUN mvn --version
+RUN make --version
