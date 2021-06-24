@@ -15,6 +15,7 @@ RUN apt-get update \
         g++ \
         git \
         locales \
+        java-common \
         maven \
         openssh-client \
         patch \
@@ -25,6 +26,14 @@ RUN apt-get update \
         python3 \
         make \
     && rm -rf /var/lib/apt/lists/*
+
+# Installing Amazon Corretto 8 JDK
+RUN curl -L -o "amazon-corretto-8-x64-linux-jdk.deb" https://corretto.aws/downloads/latest/amazon-corretto-8-x64-linux-jdk.deb
+RUN dpkg --install amazon-corretto-8-x64-linux-jdk.deb
+
+# Set Maven environment
+ENV MAVEN_HOME /usr/share/maven
+ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 
 # Default to UTF-8 file.encoding
 ENV LANG=C.UTF-8 \
@@ -58,4 +67,3 @@ ENTRYPOINT /bin/bash
 
 RUN java -version
 RUN mvn --version
-RUN make --version
