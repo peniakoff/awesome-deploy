@@ -20,6 +20,7 @@ RUN apt-get update \
         patch \
         uuid-runtime \
         unzip \
+        zip \
         jq \
         python3 \
         make \
