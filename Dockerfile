@@ -22,6 +22,7 @@ RUN apt-get update \
     unzip \
     jq \
     python3 \
+        make \
     && rm -rf /var/lib/apt/lists/*
 
 # Installing Node.js LTS (v14.x)
@@ -70,3 +71,4 @@ ENTRYPOINT /bin/bash
 
 RUN java -version
 RUN mvn --version
+RUN make --version
