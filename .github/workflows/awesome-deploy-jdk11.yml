@@ -3,12 +3,12 @@ name: awesome-deploy-jdk11
 on:
   push:
     branches:
-      - master
+      - main
     paths:
       - "awesome-deploy-jdk11/**"
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build:
