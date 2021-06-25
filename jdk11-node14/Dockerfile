@@ -31,9 +31,13 @@ RUN apt-get update \
 RUN curl -L -o "amazon-corretto-11-x64-linux-jdk.deb" https://corretto.aws/downloads/latest/amazon-corretto-11-x64-linux-jdk.deb
 RUN dpkg --install amazon-corretto-11-x64-linux-jdk.deb
 
+# Set Java environment
+ENV JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto \
+    PATH="/usr/lib/jvm/java-11-amazon-corretto/bin:$PATH"
+
 # Set Maven environment
-ENV MAVEN_HOME /usr/share/maven
-ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
+ENV MAVEN_HOME /usr/share/maven \
+    MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 
 # Installing Node.js LTS (v14.x)
 # https://github.com/nodesource/distributions/blob/master/README.md#debinstall
@@ -81,4 +85,3 @@ ENTRYPOINT /bin/bash
 
 RUN java -version
 RUN mvn --version
-RUN make --version

@@ -31,9 +31,13 @@ RUN apt-get update \
 RUN curl -L -o "amazon-corretto-8-x64-linux-jdk.deb" https://corretto.aws/downloads/latest/amazon-corretto-8-x64-linux-jdk.deb
 RUN dpkg --install amazon-corretto-8-x64-linux-jdk.deb
 
+# Set Java environment
+ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-amazon-corretto \
+    PATH="/usr/lib/jvm/java-1.8.0-amazon-corretto/bin:$PATH"
+
 # Set Maven environment
-ENV MAVEN_HOME /usr/share/maven
-ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
+ENV MAVEN_HOME /usr/share/maven \
+    MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 
 # Default to UTF-8 file.encoding
 ENV LANG=C.UTF-8 \
