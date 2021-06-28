@@ -10,4 +10,6 @@ If you need also NodeJS and npm or/and yarn, you should use image `peniakoff/awe
 
 If you need Amazon Corretto 8 JDK, you should use image `peniakoff/awesome-deploy:jdk8-latest`.
 
+If you need Amazon Corretto 8 JDK and NodeJS, you should use image `peniakoff/awesome-deploy:jdk8-node14-latest`.
+
 If you need more features/tools provided in the images, just open new discuss here https://github.com/peniakoff/awesome-deploy/discussions.
