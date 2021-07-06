@@ -67,7 +67,7 @@ ENV LANG=C.UTF-8 \
 
 # Xvfb provide an in-memory X-session for tests that require a GUI
 RUN Xvfb :99 &
-ENV DISPLAY=:99
+ENV DISPLAY=:99:0
 ENV TERM=xterm
 
 # Create Bitbucket pipelines dirs and users
