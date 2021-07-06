@@ -1,14 +1,16 @@
-name: awesome-deploy-node14-cypress-ready
+name: awesome-deploy-node14
 
 on:
   push:
     branches:
       - main
     paths:
-      - "node14-cypress-ready/**"
+      - "node14/**"
   pull_request:
     branches:
       - main
+    paths:
+      - "node14/**"
 
 jobs:
   build:
@@ -26,6 +28,6 @@ jobs:
       - name: Build and push Docker images
         uses: docker/build-push-action@v2.5.0
         with:
-          context: node14-cypress-ready/.
+          context: node14/.
           push: true
-          tags: peniakoff/awesome-deploy:node14-cypress-ready-latest
+          tags: peniakoff/awesome-deploy:node14-latest
