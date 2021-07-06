@@ -24,26 +24,6 @@ RUN apt-get update \
         jq \
         python3 \
         make \
-        libgtk2.0-0 \
-        libgtk-3-0 \
-        libnotify-dev \
-        libgconf-2-4 \
-        libgbm-dev \
-        libnss3 \
-        libxss1 \
-        libasound2 \
-        libxtst6 \
-        xauth \
-        fonts-noto-color-emoji \
-        fonts-arphic-bkai00mp \
-        fonts-arphic-bsmi00lp \
-        fonts-arphic-gbsn00lp \
-        fonts-arphic-gkai00mp \
-        fonts-arphic-ukai \
-        fonts-arphic-uming \
-        ttf-wqy-zenhei \
-        ttf-wqy-microhei \
-        xfonts-wqy \
     && rm -rf /var/lib/apt/lists/*
 
 # Installing Node.js LTS (v14.x)
@@ -64,11 +44,6 @@ RUN tsc -v
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     LANGUAGE=C.UTF-8
-
-# Xvfb provide an in-memory X-session for tests that require a GUI
-RUN Xvfb :99 &
-ENV DISPLAY=:99:0
-ENV TERM=xterm
 
 # Create Bitbucket pipelines dirs and users
 USER root

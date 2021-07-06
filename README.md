@@ -14,6 +14,6 @@ If you need Amazon Corretto 8 JDK, you should use image `peniakoff/awesome-deplo
 
 If you need Amazon Corretto 8 JDK and NodeJS, you should use image `peniakoff/awesome-deploy:jdk8-node14-latest`.
 
-If you need just NodeJS and support for testing with Cypress, you should use image `peniakoff/awesome-deploy:node14-cypress-ready-latest`.
+If you need just NodeJS (latest of v14), you should use image `peniakoff/awesome-deploy:node14-latest`.
 
 If you need more features/tools provided in the images, just open new discuss here https://github.com/peniakoff/awesome-deploy/discussions.
