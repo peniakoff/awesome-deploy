@@ -2,14 +2,18 @@
 Docker linux image for deployment (eg. via Bitbucket's Pipelines) to AWS
 
 Depends on the branch (and tag) this image contains different tools for deploying your stuff to AWS.
-Core for Dockerimage based on the `debian:stable` image and by default contains Amazon Corretto 11 JDK, Maven, Python 3, Make, AWS SAM CLI and AWS CLI (latest version for default image is `peniakoff/awesome-deploy:jdk11-latest`).
+Core for Dockerimage based on the `debian:stable` image and by default contains Amazon Corretto 11 JDK, Maven, Python 3, Make, AWS SAM CLI and AWS CLI.
 
 Default Linux timezone is set to Europe/Warsaw and file encoding is set to UTF-8.
+
+Latest version for default image with JDK 11 is `peniakoff/awesome-deploy:jdk11-latest`.
 
 If you need also NodeJS and npm or/and yarn, you should use image `peniakoff/awesome-deploy:jdk11-node14-latest`.
 
 If you need Amazon Corretto 8 JDK, you should use image `peniakoff/awesome-deploy:jdk8-latest`.
 
 If you need Amazon Corretto 8 JDK and NodeJS, you should use image `peniakoff/awesome-deploy:jdk8-node14-latest`.
+
+If you need just NodeJS and support for testing with Cypress, you should use image `peniakoff/awesome-deploy:node14-cypress-ready-latest`.
 
 If you need more features/tools provided in the images, just open new discuss here https://github.com/peniakoff/awesome-deploy/discussions.
