@@ -16,7 +16,6 @@ RUN apt-get update \
         git \
         locales \
         java-common \
-        maven \
         openssh-client \
         patch \
         uuid-runtime \
@@ -25,19 +24,41 @@ RUN apt-get update \
         jq \
         python3 \
         make \
+        libgtk2.0-0 \
+        libgtk-3-0 \
+        libnotify-dev \
+        libgconf-2-4 \
+        libgbm-dev \
+        libnss3 \
+        libxss1 \
+        libasound2 \
+        libxtst6 \
+        xauth \
+        fonts-noto-color-emoji \
+        fonts-arphic-bkai00mp \
+        fonts-arphic-bsmi00lp \
+        fonts-arphic-gbsn00lp \
+        fonts-arphic-gkai00mp \
+        fonts-arphic-ukai \
+        fonts-arphic-uming \
+        ttf-wqy-zenhei \
+        ttf-wqy-microhei \
+        xfonts-wqy \
     && rm -rf /var/lib/apt/lists/*
 
-# Installing Amazon Corretto 11 JDK
-RUN curl -L -o "amazon-corretto-11-x64-linux-jdk.deb" https://corretto.aws/downloads/latest/amazon-corretto-11-x64-linux-jdk.deb
-RUN dpkg --install amazon-corretto-11-x64-linux-jdk.deb
+# Installing Node.js LTS (v14.x)
+# https://github.com/nodesource/distributions/blob/master/README.md#debinstall
+RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt-get install -y nodejs
+RUN node -v
 
-# Set Java environment
-ENV JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto \
-    PATH="/usr/lib/jvm/java-11-amazon-corretto/bin:$PATH"
+# Installing yarn
+RUN npm install -g yarn
+RUN yarn -v
 
-# Set Maven environment
-ENV MAVEN_HOME /usr/share/maven \
-    MAVEN_CONFIG "$USER_HOME_DIR/.m2"
+# Installing TypeScript
+RUN npm install -g typescript
+RUN tsc -v
 
 # Default to UTF-8 file.encoding
 ENV LANG=C.UTF-8 \
@@ -68,6 +89,3 @@ USER pipelines
 
 WORKDIR /opt/atlassian/bitbucketci/agent/build
 ENTRYPOINT /bin/bash
-
-RUN java -version
-RUN mvn --version
