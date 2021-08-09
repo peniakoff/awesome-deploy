@@ -4,13 +4,9 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "jdk8-node14/**"
   pull_request:
     branches:
       - main
-    paths:
-      - "jdk8-node14/**"
 
 jobs:
   build:

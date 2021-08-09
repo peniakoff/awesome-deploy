@@ -4,13 +4,9 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "node14/**"
   pull_request:
     branches:
       - main
-    paths:
-      - "node14/**"
 
 jobs:
   build:
