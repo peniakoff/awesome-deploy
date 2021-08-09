@@ -5,12 +5,12 @@ on:
     branches:
       - main
     paths:
-      - "awesome-deploy-jdk8/**"
+      - "jdk8/**"
   pull_request:
     branches:
       - main
     paths:
-      - "awesome-deploy-jdk8/**"
+      - "jdk8/**"
 
 jobs:
   build:
