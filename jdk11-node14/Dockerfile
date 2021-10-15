@@ -42,8 +42,13 @@ ENV MAVEN_HOME /usr/share/maven \
 # Installing Node.js LTS (v14.x)
 # https://github.com/nodesource/distributions/blob/master/README.md#debinstall
 RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt-get update
 RUN apt-get install -y nodejs
 RUN node -v
+
+# Installing latest npm v7
+RUN npm install -g npm@next-7
+RUN npm -v
 
 # Installing yarn
 RUN npm install -g yarn
@@ -67,7 +72,7 @@ RUN mkdir -p /opt/atlassian/bitbucketci/agent/build \
 WORKDIR /home/pipelines
 
 # Installing AWS-SAM-CLI
-RUN curl -L -o "awssamcli.zip" "https://github.com/aws/aws-sam-cli/releases/download/v1.31.0/aws-sam-cli-linux-x86_64.zip" \
+RUN curl -L -o "awssamcli.zip" "https://github.com/aws/aws-sam-cli/releases/download/v1.33.0/aws-sam-cli-linux-x86_64.zip" \
     && unzip -d awssamcli awssamcli.zip \
     && ./awssamcli/install
 RUN sam --version
