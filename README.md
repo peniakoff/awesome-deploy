@@ -2,7 +2,7 @@
 Docker linux image for deployment (eg. via Bitbucket's Pipelines) to AWS
 
 Depends on the tag image contains different tools for deploying your stuff to AWS.
-Core for Dockerimage based on the `debian:stable` image and by default contains Amazon Corretto 11 JDK, Maven, Python 3, Make, AWS SAM CLI (`v1.33.0`) and AWS CLI.
+Core for Dockerimage based on the `debian:stable` image and by default contains Amazon Corretto 11 JDK, Maven, Python 3, Make, AWS SAM CLI (`v1.35.0`) and AWS CLI.
 
 Default Linux timezone is set to Europe/Warsaw and file encoding is set to UTF-8.
 
