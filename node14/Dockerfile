@@ -34,11 +34,11 @@ RUN apt-get install -y nodejs
 RUN node -v
 
 # Installing latest npm v7
-RUN npm install -g npm@next-7
+RUN npm install -g npm@next-8
 RUN npm -v
 
 # Installing latest npm v7
-RUN npm install -g npm@next-7
+RUN npm install -g npm@next-8
 RUN npm -v
 
 # Installing yarn
@@ -63,7 +63,7 @@ RUN mkdir -p /opt/atlassian/bitbucketci/agent/build \
 WORKDIR /home/pipelines
 
 # Installing AWS-SAM-CLI
-RUN curl -L -o "awssamcli.zip" "https://github.com/aws/aws-sam-cli/releases/download/v1.35.0/aws-sam-cli-linux-x86_64.zip" \
+RUN curl -L -o "awssamcli.zip" "https://github.com/aws/aws-sam-cli/releases/download/v1.47.0/aws-sam-cli-linux-x86_64.zip" \
     && unzip -d awssamcli awssamcli.zip \
     && ./awssamcli/install
 RUN sam --version
