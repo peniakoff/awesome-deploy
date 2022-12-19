@@ -72,7 +72,7 @@ RUN mkdir -p /opt/atlassian/bitbucketci/agent/build \
 WORKDIR /home/pipelines
 
 # Installing AWS-SAM-CLI
-RUN curl -L -o "awssamcli.zip" "https://github.com/aws/aws-sam-cli/releases/download/v1.59.0/aws-sam-cli-linux-x86_64.zip" \
+RUN curl -L -o "awssamcli.zip" "https://github.com/aws/aws-sam-cli/releases/download/v1.66.0/aws-sam-cli-linux-x86_64.zip" \
     && unzip -d awssamcli awssamcli.zip \
     && ./awssamcli/install
 RUN sam --version
@@ -82,6 +82,10 @@ RUN curl -L -o "awscliv2.zip" "https://awscli.amazonaws.com/awscli-exe-linux-x86
     && unzip awscliv2.zip \
     && ./aws/install
 RUN aws --version
+
+# Installing AWS CDK
+RUN npm install -g aws-cdk
+RUN cdk --version
 
 USER pipelines
 
