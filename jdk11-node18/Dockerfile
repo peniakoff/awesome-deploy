@@ -27,17 +27,35 @@ RUN apt-get update \
         make \
     && rm -rf /var/lib/apt/lists/*
 
-# Installing Amazon Corretto 8 JDK
-RUN curl -L -o "amazon-corretto-8-x64-linux-jdk.deb" https://corretto.aws/downloads/latest/amazon-corretto-8-x64-linux-jdk.deb
-RUN dpkg --install amazon-corretto-8-x64-linux-jdk.deb
+# Installing Amazon Corretto 11 JDK
+RUN curl -L -o "amazon-corretto-11-x64-linux-jdk.deb" https://corretto.aws/downloads/latest/amazon-corretto-11-x64-linux-jdk.deb
+RUN dpkg --install amazon-corretto-11-x64-linux-jdk.deb
 
 # Set Java environment
-ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-amazon-corretto \
-    PATH="/usr/lib/jvm/java-1.8.0-amazon-corretto/bin:$PATH"
+ENV JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto \
+    PATH="/usr/lib/jvm/java-11-amazon-corretto/bin:$PATH"
 
 # Set Maven environment
 ENV MAVEN_HOME /usr/share/maven \
     MAVEN_CONFIG "$USER_HOME_DIR/.m2"
+
+# Installing nvm
+SHELL ["/bin/bash", "--login", "-c"]
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+RUN nvm -v
+
+# Installing Node.js LTS (v18.x) and npm
+RUN nvm install 18
+RUN node -v
+RUN npm -v
+
+# Installing yarn
+RUN npm install -g yarn
+RUN yarn -v
+
+# Installing TypeScript
+RUN npm install -g typescript
+RUN tsc -v
 
 # Default to UTF-8 file.encoding
 ENV LANG=C.UTF-8 \
@@ -63,6 +81,10 @@ RUN curl -L -o "awscliv2.zip" "https://awscli.amazonaws.com/awscli-exe-linux-x86
     && unzip awscliv2.zip \
     && ./aws/install
 RUN aws --version
+
+# Installing AWS CDK
+RUN npm install -g aws-cdk
+RUN cdk --version
 
 USER pipelines
 
