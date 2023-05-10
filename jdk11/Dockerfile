@@ -49,6 +49,8 @@ USER root
 RUN mkdir -p /opt/atlassian/bitbucketci/agent/build \
     && sed -i '/[ -z \"PS1\" ] && return/a\\ncase $- in\n*i*) ;;\n*) return;;\nesac' /root/.bashrc \
     && useradd -m -s /bin/bash pipelines
+RUN git --version
+RUN git config --system --add safe.directory '*'
 
 WORKDIR /home/pipelines
 
