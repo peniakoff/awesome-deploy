@@ -24,6 +24,6 @@ jobs:
       - name: Build and push Docker images
         uses: docker/build-push-action@v2.5.0
         with:
-          context: node18/.
+          context: node14/.
           push: true
           tags: peniakoff/awesome-deploy:node18-latest
