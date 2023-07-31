@@ -30,7 +30,7 @@ SHELL ["/bin/bash", "--login", "-c"]
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
 RUN nvm -v
 
-# Installing Node.js LTS (v18.x)
+# Installing Node.js LTS (v18.x) and npm
 RUN nvm install 18
 RUN node -v
 RUN npm -v

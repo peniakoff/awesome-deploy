@@ -45,6 +45,9 @@ RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt-get update
 RUN apt-get install -y nodejs
 RUN node -v
+
+# Installing latest npm v8
+RUN npm install -g npm@next-8
 RUN npm -v
 
 # Installing yarn
