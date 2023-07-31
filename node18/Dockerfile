@@ -15,7 +15,6 @@ RUN apt-get update \
         g++ \
         git \
         locales \
-        java-common \
         openssh-client \
         patch \
         uuid-runtime \
@@ -31,8 +30,8 @@ SHELL ["/bin/bash", "--login", "-c"]
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
 RUN nvm -v
 
-# Installing Node.js (latest v14)
-RUN nvm install 14
+# Installing Node.js LTS (v18.x)
+RUN nvm install 18
 RUN node -v
 RUN npm -v
 

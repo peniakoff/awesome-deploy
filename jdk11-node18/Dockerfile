@@ -41,10 +41,10 @@ ENV MAVEN_HOME /usr/share/maven \
 
 # Installing nvm
 SHELL ["/bin/bash", "--login", "-c"]
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
 RUN nvm -v
 
-# Installing Node.js LTS (v18.x) and npm
+# Installing Node.js LTS (v18.x)
 RUN nvm install 18
 RUN node -v
 RUN npm -v
@@ -73,7 +73,7 @@ RUN git config --system --add safe.directory '*'
 WORKDIR /home/pipelines
 
 # Installing AWS-SAM-CLI
-RUN curl -L -o "awssamcli.zip" "https://github.com/aws/aws-sam-cli/releases/download/v1.80.0/aws-sam-cli-linux-x86_64.zip" \
+RUN curl -L -o "awssamcli.zip" "https://github.com/aws/aws-sam-cli/releases/download/v1.94.0/aws-sam-cli-linux-x86_64.zip" \
     && unzip -d awssamcli awssamcli.zip \
     && ./awssamcli/install
 RUN sam --version

@@ -39,15 +39,14 @@ ENV JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto \
 ENV MAVEN_HOME /usr/share/maven \
     MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 
-# Installing Node.js LTS (v14.x)
-# https://github.com/nodesource/distributions/blob/master/README.md#debinstall
-RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt-get update
-RUN apt-get install -y nodejs
-RUN node -v
+# Installing nvm
+SHELL ["/bin/bash", "--login", "-c"]
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
+RUN nvm -v
 
-# Installing latest npm v8
-RUN npm install -g npm@next-8
+# Installing Node.js (latest v14)
+RUN nvm install 14
+RUN node -v
 RUN npm -v
 
 # Installing yarn
@@ -74,7 +73,7 @@ RUN git config --system --add safe.directory '*'
 WORKDIR /home/pipelines
 
 # Installing AWS-SAM-CLI
-RUN curl -L -o "awssamcli.zip" "https://github.com/aws/aws-sam-cli/releases/download/v1.80.0/aws-sam-cli-linux-x86_64.zip" \
+RUN curl -L -o "awssamcli.zip" "https://github.com/aws/aws-sam-cli/releases/download/v1.94.0/aws-sam-cli-linux-x86_64.zip" \
     && unzip -d awssamcli awssamcli.zip \
     && ./awssamcli/install
 RUN sam --version
