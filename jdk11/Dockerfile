@@ -76,4 +76,3 @@ RUN java -version
 RUN mvn --version
 RUN sam --version
 RUN aws --version
-RUN cdk --version
