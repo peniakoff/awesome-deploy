@@ -6,32 +6,30 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends  \
-        software-properties-common \
-        xvfb \
-        ca-certificates \
-        curl \
-        file \
-        fonts-dejavu-core \
-        g++ \
-        git \
-        locales \
-        openssh-client \
-        patch \
-        uuid-runtime \
-        unzip \
-        zip \
-        jq \
-        python3 \
-        make \
+    software-properties-common \
+    xvfb \
+    ca-certificates \
+    curl \
+    file \
+    fonts-dejavu-core \
+    g++ \
+    git \
+    locales \
+    openssh-client \
+    patch \
+    uuid-runtime \
+    unzip \
+    zip \
+    jq \
+    python3 \
+    make \
     && rm -rf /var/lib/apt/lists/*
 
-# Installing nvm
-SHELL ["/bin/bash", "--login", "-c"]
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
-RUN nvm -v
-
-# Installing Node.js LTS (v18.x)
-RUN nvm install 18
+# Installing Node.js (latest v18)
+# https://github.com/nodesource/distributions/blob/master/README.md#debinstall
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get update \
+    && apt-get install -y nodejs
 RUN node -v
 RUN npm -v
 
@@ -78,3 +76,14 @@ USER pipelines
 
 WORKDIR /opt/atlassian/bitbucketci/agent/build
 ENTRYPOINT /bin/bash
+
+# Check versions
+RUN java -version
+RUN mvn --version
+RUN node -v
+RUN npm -v
+RUN yarn -v
+RUN tsc -v
+RUN sam --version
+RUN aws --version
+RUN cdk --version

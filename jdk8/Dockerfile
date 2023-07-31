@@ -71,5 +71,9 @@ USER pipelines
 WORKDIR /opt/atlassian/bitbucketci/agent/build
 ENTRYPOINT /bin/bash
 
+# Check versions
 RUN java -version
 RUN mvn --version
+RUN sam --version
+RUN aws --version
+RUN cdk --version
