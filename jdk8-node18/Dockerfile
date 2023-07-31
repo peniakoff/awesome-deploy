@@ -16,6 +16,7 @@ RUN apt-get update \
         git \
         locales \
         java-common \
+        maven \
         openssh-client \
         patch \
         uuid-runtime \
@@ -26,19 +27,24 @@ RUN apt-get update \
         make \
     && rm -rf /var/lib/apt/lists/*
 
-# Installing Node.js LTS (v14.x)
+# Installing Amazon Corretto 8 JDK
+RUN curl -L -o "amazon-corretto-8-x64-linux-jdk.deb" https://corretto.aws/downloads/latest/amazon-corretto-8-x64-linux-jdk.deb
+RUN dpkg --install amazon-corretto-8-x64-linux-jdk.deb
+
+# Set Java environment
+ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-amazon-corretto \
+    PATH="/usr/lib/jvm/java-1.8.0-amazon-corretto/bin:$PATH"
+
+# Set Maven environment
+ENV MAVEN_HOME /usr/share/maven \
+    MAVEN_CONFIG "$USER_HOME_DIR/.m2"
+
+# Installing Node.js LTS (v18.x)
 # https://github.com/nodesource/distributions/blob/master/README.md#debinstall
-RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt-get update
-RUN apt-get install -y nodejs
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get update \
+    && apt-get install -y nodejs
 RUN node -v
-
-# Installing latest npm v8
-RUN npm install -g npm@next-8
-RUN npm -v
-
-# Installing latest npm v8
-RUN npm install -g npm@next-8
 RUN npm -v
 
 # Installing yarn
@@ -65,7 +71,7 @@ RUN git config --system --add safe.directory '*'
 WORKDIR /home/pipelines
 
 # Installing AWS-SAM-CLI
-RUN curl -L -o "awssamcli.zip" "https://github.com/aws/aws-sam-cli/releases/download/v1.80.0/aws-sam-cli-linux-x86_64.zip" \
+RUN curl -L -o "awssamcli.zip" "https://github.com/aws/aws-sam-cli/releases/download/v1.94.0/aws-sam-cli-linux-x86_64.zip" \
     && unzip -d awssamcli awssamcli.zip \
     && ./awssamcli/install
 RUN sam --version
@@ -84,3 +90,14 @@ USER pipelines
 
 WORKDIR /opt/atlassian/bitbucketci/agent/build
 ENTRYPOINT /bin/bash
+
+# Check versions
+RUN java -version
+RUN mvn --version
+RUN node -v
+RUN npm -v
+RUN yarn -v
+RUN tsc -v
+RUN sam --version
+RUN aws --version
+RUN cdk --version
