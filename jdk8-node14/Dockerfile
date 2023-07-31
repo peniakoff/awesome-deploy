@@ -39,13 +39,11 @@ ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-amazon-corretto \
 ENV MAVEN_HOME /usr/share/maven \
     MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 
-# Installing nvm
-SHELL ["/bin/bash", "--login", "-c"]
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
-RUN nvm -v
-
-# Installing Node.js (latest v14)
-RUN nvm install 14
+# Installing Node.js LTS (v14.x)
+# https://github.com/nodesource/distributions/blob/master/README.md#debinstall
+RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt-get update
+RUN apt-get install -y nodejs
 RUN node -v
 RUN npm -v
 
