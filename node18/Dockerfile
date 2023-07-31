@@ -15,8 +15,6 @@ RUN apt-get update \
         g++ \
         git \
         locales \
-        java-common \
-        maven \
         openssh-client \
         patch \
         uuid-runtime \
@@ -27,27 +25,14 @@ RUN apt-get update \
         make \
     && rm -rf /var/lib/apt/lists/*
 
-# Installing Amazon Corretto 11 JDK
-RUN curl -L -o "amazon-corretto-11-x64-linux-jdk.deb" https://corretto.aws/downloads/latest/amazon-corretto-11-x64-linux-jdk.deb
-RUN dpkg --install amazon-corretto-11-x64-linux-jdk.deb
+# Installing nvm
+SHELL ["/bin/bash", "--login", "-c"]
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
+RUN nvm -v
 
-# Set Java environment
-ENV JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto \
-    PATH="/usr/lib/jvm/java-11-amazon-corretto/bin:$PATH"
-
-# Set Maven environment
-ENV MAVEN_HOME /usr/share/maven \
-    MAVEN_CONFIG "$USER_HOME_DIR/.m2"
-
-# Installing Node.js LTS (v14.x)
-# https://github.com/nodesource/distributions/blob/master/README.md#debinstall
-RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt-get update
-RUN apt-get install -y nodejs
+# Installing Node.js LTS (v18.x) and npm
+RUN nvm install 18
 RUN node -v
-
-# Installing latest npm v8
-RUN npm install -g npm@next-8
 RUN npm -v
 
 # Installing yarn
@@ -93,6 +78,3 @@ USER pipelines
 
 WORKDIR /opt/atlassian/bitbucketci/agent/build
 ENTRYPOINT /bin/bash
-
-RUN java -version
-RUN mvn --version
