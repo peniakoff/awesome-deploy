@@ -41,6 +41,10 @@ RUN yarn -v
 RUN npm install -g typescript
 RUN tsc -v
 
+# Installing pnpm
+RUN npm install -g pnpm
+RUN pnpm -v
+
 # Default to UTF-8 file.encoding
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
@@ -57,7 +61,7 @@ RUN git config --system --add safe.directory '*'
 WORKDIR /home/pipelines
 
 # Installing AWS-SAM-CLI
-RUN curl -L -o "awssamcli.zip" "https://github.com/aws/aws-sam-cli/releases/download/v1.94.0/aws-sam-cli-linux-x86_64.zip" \
+RUN curl -L -o "awssamcli.zip" "https://github.com/aws/aws-sam-cli/releases/download/v1.120.0/aws-sam-cli-linux-x86_64.zip" \
     && unzip -d awssamcli awssamcli.zip \
     && ./awssamcli/install
 RUN sam --version

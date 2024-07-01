@@ -26,4 +26,4 @@ jobs:
         with:
           context: node18/.
           push: true
-          tags: peniakoff/awesome-deploy:node18-latest,peniakoff/awesome-deploy:node14-latest
+          tags: peniakoff/awesome-deploy:node18-latest

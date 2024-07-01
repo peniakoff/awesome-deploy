@@ -1,16 +1,11 @@
 # AWeSome-deploy
 
 ---
-### Attention! ###
-
-**NodeJS v14 is deprecated! It means all images cotaining NodeJS v14 have been upgraded to NodeJS v18. Tags with old name convention have been stored just for compatibilit and they will be removed in the future!**
-
----
 
 Docker linux image for deployment (eg. via Bitbucket's Pipelines) to AWS
 
 Depends on the tag image contains different tools for deploying your stuff to AWS.
-Core for Dockerimage based on the `debian:stable` image and by default contains Amazon Corretto 11 JDK, Maven, Python 3, Make, AWS SAM CLI (`v1.94.0`) and AWS CLI.
+Core for Dockerimage based on the `debian:stable` image and by default contains Amazon Corretto 11 JDK, Maven, Python 3, Make, AWS SAM CLI (`v1.120.0`) and AWS CLI.
 
 Default Linux timezone is set to Europe/Warsaw and file encoding is set to UTF-8.
 
