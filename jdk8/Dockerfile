@@ -55,9 +55,9 @@ RUN git config --system --add safe.directory '*'
 WORKDIR /home/pipelines
 
 # Installing AWS-SAM-CLI
-RUN curl -L -o "awssamcli.zip" "https://github.com/aws/aws-sam-cli/releases/download/v1.120.0/aws-sam-cli-linux-x86_64.zip" \
-    && unzip -d awssamcli awssamcli.zip \
-    && ./awssamcli/install
+RUN curl -L -o "awssamcli.zip" "https://github.com/aws/aws-sam-cli/releases/download/v1.121.0/aws-sam-cli-linux-x86_64.zip"
+RUN unzip -d awssamcli awssamcli.zip
+RUN ./awssamcli/install
 RUN sam --version
 
 # Installing AWS-CLI

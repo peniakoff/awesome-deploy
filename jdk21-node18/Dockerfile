@@ -27,17 +27,38 @@ RUN apt-get update \
         make \
     && rm -rf /var/lib/apt/lists/*
 
-# Installing Amazon Corretto 11 JDK
-RUN curl -L -o "amazon-corretto-11-x64-linux-jdk.deb" https://corretto.aws/downloads/latest/amazon-corretto-11-x64-linux-jdk.deb
-RUN dpkg --install amazon-corretto-11-x64-linux-jdk.deb
+# Installing Amazon Corretto 21 JDK
+RUN curl -sSL https://apt.corretto.aws/corretto.key | gpg --dearmor -o /usr/share/keyrings/corretto-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/corretto-keyring.gpg] https://apt.corretto.aws stable main" | tee /etc/apt/sources.list.d/corretto.list
+RUN apt-get update && apt-get install -y java-21-amazon-corretto-jdk
 
 # Set Java environment
-ENV JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto \
-    PATH="/usr/lib/jvm/java-11-amazon-corretto/bin:$PATH"
+ENV JAVA_HOME=/usr/lib/jvm/java-21-amazon-corretto \
+    PATH="/usr/lib/jvm/java-21-amazon-corretto/bin:$PATH"
 
 # Set Maven environment
 ENV MAVEN_HOME /usr/share/maven \
     MAVEN_CONFIG "$USER_HOME_DIR/.m2"
+
+# Installing Node.js LTS (v18.x)
+# https://github.com/nodesource/distributions/blob/master/README.md#debinstall
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get update \
+    && apt-get install -y nodejs
+RUN node -v
+RUN npm -v
+
+# Installing yarn
+RUN npm install -g yarn
+RUN yarn -v
+
+# Installing TypeScript
+RUN npm install -g typescript
+RUN tsc -v
+
+# Installing pnpm
+RUN npm install -g pnpm
+RUN pnpm -v
 
 # Default to UTF-8 file.encoding
 ENV LANG=C.UTF-8 \
@@ -66,6 +87,10 @@ RUN curl -L -o "awscliv2.zip" "https://awscli.amazonaws.com/awscli-exe-linux-x86
     && ./aws/install
 RUN aws --version
 
+# Installing AWS CDK
+RUN npm install -g aws-cdk
+RUN cdk --version
+
 USER pipelines
 
 WORKDIR /opt/atlassian/bitbucketci/agent/build
@@ -74,5 +99,10 @@ ENTRYPOINT /bin/bash
 # Check versions
 RUN java -version
 RUN mvn --version
+RUN node -v
+RUN npm -v
+RUN yarn -v
+RUN tsc -v
 RUN sam --version
 RUN aws --version
+RUN cdk --version
