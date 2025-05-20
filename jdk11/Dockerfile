@@ -1,4 +1,4 @@
-FROM debian:stable
+FROM debian:stable-slim
 LABEL maintainer="Tomasz Miller"
 
 ENV TZ=Europe/Warsaw
@@ -6,26 +6,27 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends  \
-        software-properties-common \
-        xvfb \
-        ca-certificates \
-        curl \
-        file \
-        fonts-dejavu-core \
-        g++ \
-        git \
-        locales \
-        java-common \
-        maven \
-        openssh-client \
-        patch \
-        uuid-runtime \
-        unzip \
-        zip \
-        jq \
-        python3 \
-        make \
-    && rm -rf /var/lib/apt/lists/*
+    software-properties-common \
+    xvfb \
+    ca-certificates \
+    curl \
+    file \
+    fonts-dejavu-core \
+    g++ \
+    git \
+    locales \
+    java-common \
+    maven \
+    openssh-client \
+    patch \
+    uuid-runtime \
+    unzip \
+    zip \
+    jq \
+    python3 \
+    make \
+    && rm -rf /var/lib/apt/lists/* \
+    && mvn --version
 
 # Installing Amazon Corretto 11 JDK
 RUN curl -L -o "amazon-corretto-11-x64-linux-jdk.deb" https://corretto.aws/downloads/latest/amazon-corretto-11-x64-linux-jdk.deb
@@ -34,10 +35,11 @@ RUN dpkg --install amazon-corretto-11-x64-linux-jdk.deb
 # Set Java environment
 ENV JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto \
     PATH="/usr/lib/jvm/java-11-amazon-corretto/bin:$PATH"
+RUN java -version
 
 # Set Maven environment
-ENV MAVEN_HOME /usr/share/maven \
-    MAVEN_CONFIG "$USER_HOME_DIR/.m2"
+ENV MAVEN_HOME=/usr/share/maven \
+    MAVEN_CONFIG="$USER_HOME_DIR/.m2"
 
 # Default to UTF-8 file.encoding
 ENV LANG=C.UTF-8 \
@@ -55,24 +57,22 @@ RUN git config --system --add safe.directory '*'
 WORKDIR /home/pipelines
 
 # Installing AWS-SAM-CLI
-RUN curl -L -o "awssamcli.zip" "https://github.com/aws/aws-sam-cli/releases/download/v1.121.0/aws-sam-cli-linux-x86_64.zip"
-RUN unzip -d awssamcli awssamcli.zip
-RUN ./awssamcli/install
-RUN sam --version
+RUN curl -L -o "awssamcli.zip" "https://github.com/aws/aws-sam-cli/releases/download/v1.138.0/aws-sam-cli-linux-x86_64.zip" \
+    && unzip -d awssamcli awssamcli.zip \
+    && ./awssamcli/install \
+    && rm awssamcli.zip \
+    && rm -rf awssamcli \
+    && sam --version
 
 # Installing AWS-CLI
 RUN curl -L -o "awscliv2.zip" "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" \
     && unzip awscliv2.zip \
-    && ./aws/install
-RUN aws --version
+    && ./aws/install \
+    && rm awscliv2.zip \
+    && rm -rf aws \
+    && aws --version
 
 USER pipelines
 
 WORKDIR /opt/atlassian/bitbucketci/agent/build
-ENTRYPOINT /bin/bash
-
-# Check versions
-RUN java -version
-RUN mvn --version
-RUN sam --version
-RUN aws --version
+ENTRYPOINT ["/bin/bash", "-c"]

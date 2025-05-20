@@ -15,8 +15,6 @@ RUN apt-get update \
     g++ \
     git \
     locales \
-    java-common \
-    maven \
     openssh-client \
     patch \
     uuid-runtime \
@@ -25,28 +23,14 @@ RUN apt-get update \
     jq \
     python3 \
     make \
-    && rm -rf /var/lib/apt/lists/* \
-    && mvn --version
+    && rm -rf /var/lib/apt/lists/*
 
-# Installing Amazon Corretto 21 JDK
-RUN curl -sSL https://apt.corretto.aws/corretto.key | gpg --dearmor -o /usr/share/keyrings/corretto-keyring.gpg && \
-    echo "deb [signed-by=/usr/share/keyrings/corretto-keyring.gpg] https://apt.corretto.aws stable main" | tee /etc/apt/sources.list.d/corretto.list
-RUN apt-get update && apt-get install -y java-21-amazon-corretto-jdk
-
-# Set Java environment
-ENV JAVA_HOME=/usr/lib/jvm/java-21-amazon-corretto \
-    PATH="/usr/lib/jvm/java-21-amazon-corretto/bin:$PATH"
-RUN java -version
-
-# Set Maven environment
-ENV MAVEN_HOME=/usr/share/maven \
-    MAVEN_CONFIG="$USER_HOME_DIR/.m2"
-
-# Installing Node.js (v18.x)
+# Installing Node.js (v22.x)
 # https://github.com/nodesource/distributions/blob/master/README.md#debinstall
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get update \
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh \
+    && bash nodesource_setup.sh \
     && apt-get install -y nodejs \
+    && rm nodesource_setup.sh \
     && node -v \
     && npm -v
 

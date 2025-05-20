@@ -1,4 +1,4 @@
-FROM debian:stable-slim
+FROM debian:stable-slim-slim
 LABEL maintainer="Tomasz Miller"
 
 ENV TZ=Europe/Warsaw
@@ -42,11 +42,12 @@ RUN java -version
 ENV MAVEN_HOME=/usr/share/maven \
     MAVEN_CONFIG="$USER_HOME_DIR/.m2"
 
-# Installing Node.js (v18.x)
+# Installing Node.js (v22.x)
 # https://github.com/nodesource/distributions/blob/master/README.md#debinstall
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get update \
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh \
+    && bash nodesource_setup.sh \
     && apt-get install -y nodejs \
+    && rm nodesource_setup.sh \
     && node -v \
     && npm -v
 

@@ -1,4 +1,4 @@
-name: awesome-deploy-node18
+name: awesome-deploy-jdk21-node22
 
 on:
   push:
@@ -24,6 +24,6 @@ jobs:
       - name: Build and push Docker images
         uses: docker/build-push-action@v6
         with:
-          context: node18/.
+          context: jdk21-node22/.
           push: true
-          tags: peniakoff/awesome-deploy:node18-latest
+          tags: peniakoff/awesome-deploy:jdk21-node22-latest
