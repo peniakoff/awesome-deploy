@@ -1,4 +1,4 @@
-FROM debian:stable-slim-slim
+FROM debian:stable-slim
 LABEL maintainer="Tomasz Miller"
 
 ENV TZ=Europe/Warsaw
