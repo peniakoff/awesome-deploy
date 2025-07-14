@@ -38,8 +38,9 @@ ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-amazon-corretto \
 RUN java -version
 
 # Set Maven environment
-ENV MAVEN_HOME=/usr/share/maven \
-    MAVEN_CONFIG="$USER_HOME_DIR/.m2"
+ENV USER_HOME_DIR=/home/pipelines
+ENV MAVEN_HOME=/usr/share/maven
+ENV MAVEN_CONFIG="$USER_HOME_DIR/.m2"
 
 # Default to UTF-8 file.encoding
 ENV LANG=C.UTF-8 \
@@ -57,7 +58,7 @@ RUN git config --system --add safe.directory '*'
 WORKDIR /home/pipelines
 
 # Installing AWS-SAM-CLI
-RUN curl -L -o "awssamcli.zip" "https://github.com/aws/aws-sam-cli/releases/download/v1.138.0/aws-sam-cli-linux-x86_64.zip" \
+RUN curl -L -o "awssamcli.zip" "https://github.com/aws/aws-sam-cli/releases/download/v1.142.1/aws-sam-cli-linux-x86_64.zip" \
     && unzip -d awssamcli awssamcli.zip \
     && ./awssamcli/install \
     && rm awssamcli.zip \
