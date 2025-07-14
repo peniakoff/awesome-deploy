@@ -43,22 +43,14 @@ ENV USER_HOME_DIR=/home/pipelines
 ENV MAVEN_HOME=/usr/share/maven
 ENV MAVEN_CONFIG="$USER_HOME_DIR/.m2"
 
-# Installing Node.js (v18.x)
-# https://github.com/nodesource/distributions/blob/master/README.md#debinstall
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get update \
-    && apt-get install -y nodejs \
-    && node -v \
-    && npm -v
-
-# Installing yarn
-RUN npm install -g yarn && yarn -v
-
-# Installing TypeScript
-RUN npm install -g typescript && tsc -v
-
-# Installing pnpm
-RUN npm install -g pnpm && pnpm -v
+# Installing Gradle
+ENV GRADLE_VERSION=8.14.3
+RUN curl -L -o gradle.zip "https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip" \
+    && mkdir -p /opt/gradle \
+    && unzip -d /opt/gradle gradle.zip \
+    && rm gradle.zip
+ENV PATH="$PATH:/opt/gradle/gradle-${GRADLE_VERSION}/bin"
+RUN gradle --version
 
 # Default to UTF-8 file.encoding
 ENV LANG=C.UTF-8 \
@@ -90,10 +82,6 @@ RUN curl -L -o "awscliv2.zip" "https://awscli.amazonaws.com/awscli-exe-linux-x86
     && rm awscliv2.zip \
     && rm -rf aws \
     && aws --version
-
-# Installing AWS CDK
-RUN npm install -g aws-cdk \
-    && cdk --version
 
 USER pipelines
 
